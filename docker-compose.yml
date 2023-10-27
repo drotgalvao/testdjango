@@ -1,0 +1,20 @@
+version: '3'
+services:
+  db:
+    image: mysql  # substitua pelo nome da sua imagem MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: SENHA
+      MYSQL_DATABASE: NOME
+      MYSQL_USER: USUARIO
+      MYSQL_PASSWORD: SENHA
+    ports:
+      - "3306:3306"
+  web:
+    build: .  # o diretório que contém o Dockerfile da sua API Django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
